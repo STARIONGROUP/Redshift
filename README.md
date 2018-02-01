@@ -22,7 +22,7 @@ Copyright (c) 2018 RHEA System S.A.
 
 Author: Alex Vorobiev
 
-This file is part of Redshift.Orm.Contributions to the code-base are welcome. However, before we can accept your contributions we ask any contributor to sign the Contributor License Agreement (CLA) and send this digitaly signed to s.gerene@rheagroup.com. You can find the CLA's in the CLA folder.
+This file is part of Redshift.Orm
 
 Redshift.Orm is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
