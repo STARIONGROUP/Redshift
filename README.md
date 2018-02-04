@@ -7,13 +7,34 @@ Redshift is a framework encompassing various helper libraries used to implement 
 
 AppVeyor is used to build and test Redshift
 
-Status Coming Soon...
-
+| master | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/master?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/master) |
+| development | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/development?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/development) |
+ 
 ## Redshift.Orm
-Coming soon...
+An object relational mapping library that enables you to connect your data model to a persistance back-end. As of now only PostgreSQL is supported, but it is envisioned for more database providers to become available.
+
+### Installation
+
+The librbary is available on nuget.org: https://www.nuget.org/packages/Redshift.Orm
+
+```
+Install-Package Redshift.Orm
+```
 
 ## Redshift.Api
-Coming soon...
+An API helper library designed to standardize interfaces and core implementations of an API based on **NancyFX** 2 and **Redshift.Orm**.
+
+### Installation
+
+The librbary is available on nuget.org: https://www.nuget.org/packages/Redshift.Api
+
+```
+Install-Package Redshift.Api
+```
+
+NOTE: Redshift.Api is automatically dependent on Redshift.Orm. There is no need to install the **Orm** library if the **Api** library is installed.
+
+
 # License
 
 The libraries contained in the Redshift Framework are provided to the community under the GNU Lesser General Public License v3. See the LICENSE and COPYING.LESSER files for the license text.
