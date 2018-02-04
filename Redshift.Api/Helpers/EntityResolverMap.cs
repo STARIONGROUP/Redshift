@@ -5,7 +5,7 @@
 //
 //    Author: Alex Vorobiev
 //
-//    This file is part of Redshift.Orm.
+//    This file is part of Redshift.Api.
 //
 //    Redshift.Orm is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -23,12 +23,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 #endregion
 
-namespace Redshift.Orm.EntityObject
+namespace Redshift.Api
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Newtonsoft.Json.Linq;
+    using Redshift.Orm.EntityObject;
 
     /// <summary>
     /// Utility class that is responsible for instantiating a <see cref="Thing"/>.
@@ -54,6 +55,6 @@ namespace Redshift.Orm.EntityObject
         /// <summary>
         /// The concrete entity resolver
         /// </summary>
-        public static readonly Dictionary<string, Func<JObject, IEntityObject>> Map = new Dictionary<string, Func<JObject, IEntityObject>>();
+        public static readonly ConcurrentDictionary<string, Func<JObject, IEntityObject>> DeserializationMap = new ConcurrentDictionary<string, Func<JObject, IEntityObject>>();
     }
 }

@@ -32,7 +32,6 @@ namespace Redshift.Api.Helpers
     using System.Reflection;
     using Nancy;
     using Orm.Database;
-    using Orm.EntityObject;
 
     /// <summary>
     /// QueryParameterContainer resolves and stores query parameters

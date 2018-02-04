@@ -12,6 +12,7 @@ before_build:
 build:
   project: Redshift.sln
   publish_nuget: true
+  include_nuget_references: true
 test:
   assemblies:
     only:
@@ -24,6 +25,9 @@ after_test:
   - codecov -f "coverage.xml" -t e4567a09-8a81-4da7-b003-57c8d7d41dbb
 deploy:
   provider: NuGet
+  name: production
+  on:
+    branch: master
   api_key:
     secure: 
   skip_symbols: false
