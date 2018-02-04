@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redshift.Orm.Tests", "Redsh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E00D996-C83E-481F-B3C5-32E4055A69D8}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		COPYING.LESSER = COPYING.LESSER
 		LICENSE = LICENSE
 		Redshift.sln.licenseheader = Redshift.sln.licenseheader

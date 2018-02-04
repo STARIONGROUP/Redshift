@@ -1,0 +1,30 @@
+image: Visual Studio 2017
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+configuration:
+  - Debug
+before_build:
+  - cmd: nuget install NUnit.Console -Version 3.7.0 -OutputDirectory tools
+  - cmd: nuget install OpenCover -Version 4.6.519 -OutputDirectory tools
+  - cmd: nuget restore
+  - cmd: choco install codecov
+build:
+  project: Redshift.sln
+  publish_nuget: true
+test:
+  assemblies:
+    only:
+      - '**\*.Tests.dll'
+  categories:
+    except:
+      - AppVeyorExclusion
+after_test:
+  - .\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:".\tools\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:".\Redshift.Orm.Tests\bin\Debug\net452\Redshift.Orm.Tests.dll" -output:"coverage.xml"
+  - codecov -f "coverage.xml" -t e4567a09-8a81-4da7-b003-57c8d7d41dbb
+deploy:
+  provider: NuGet
+  api_key:
+    secure: 
+  skip_symbols: false
+  artifact: /.*\.nupkg/
