@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using Redshift.Sample.Model;
 
 namespace Redshift.Sample
 {
@@ -32,6 +33,17 @@ namespace Redshift.Sample
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            var user = new User
+            {
+                Username = "alex",
+                Password = "123",
+                Email = "bla@bla.com"
+            };
+
+            user.Save();
+
+            user.Delete();
         }
     }
 }
