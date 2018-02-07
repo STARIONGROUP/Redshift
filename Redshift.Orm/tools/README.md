@@ -7,7 +7,7 @@ This file explains how to use the migration powershell module.
 To load the module into memory while VS is running, open the Package Manager Console and run the following command:
 
 ```
-Import-Module -Name .\src\SherlockServer\Scripts\New-MigrationFile.psm1 -Verbose
+Import-Module -Name .\src\path\to\New-MigrationFile.psm1 -Verbose
 ```
 
 This has to be done everytime that VS is opened.
