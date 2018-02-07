@@ -5,6 +5,10 @@ using Redshift.Orm.EntityObject;
 
 namespace Redshift.Sample.Model
 {
+    using Api.Attributes;
+
+    [ApiDescription("A normal physical person.")]
+    [ApiIgnoreMethod(RestMethods.PATCH | RestMethods.DELETE, "Users cannot be PATCHED or DELETED.")]
     public class User : EntityObject<User>
     {
         [IgnoreDataMember]
@@ -15,12 +19,14 @@ namespace Redshift.Sample.Model
 
         public int Id { get; set; }
 
+        [ApiDescription("A unique username used for authenticaltion.")]
         public string Username { get; set; }
 
-        [DbIgnore]
+        [ApiSerializeNull]
         public string Password { get; set; }
 
         [EntityColumnNameOverride("electronicmail")]
+        [ApiWarning("The email should follow a specific regex pattern.")]
         public string Email { get; set; }
     }
 }

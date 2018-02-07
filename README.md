@@ -43,7 +43,7 @@ The libraries contained in the Redshift Framework are provided to the community 
 ## Copyright Statement
 Copyright (c) 2018 RHEA System S.A.
 
-Author: Alex Vorobiev
+Authors: Alex Vorobiev, Naron Phou
 
 This file is part of Redshift.Orm
 
@@ -61,4 +61,5 @@ You should have received a copy of the GNU General Public License
 along with Redshift.Orm.  If not, see <http://www.gnu.org/licenses/>.
 
 # Contributions
-We welcome contributons conforming to the license.
+
+Contributions to the code-base are welcome. However, before we can accept your contributions we ask any contributor to sign the Contributor License Agreement (CLA) and send this digitaly signed to s.gerene@rheagroup.com. You can find the CLA's in the root of the solution.
