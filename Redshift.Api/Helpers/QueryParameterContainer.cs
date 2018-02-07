@@ -154,6 +154,7 @@ namespace Redshift.Api.Helpers
                 this.Offset = (this.PageNumber - 1) * this.Limit;
             }
 
+            // TODO: This property name should not be hardwired.
             this.OrderProperty = entityType.GetProperty("Uuid");
             this.IsDescending = true;
 
