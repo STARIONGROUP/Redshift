@@ -152,12 +152,14 @@ namespace Redshift.Seed.Modules
             var types = EntityResolverMap.AbstractToConcreteMap[entity];
             var response = new ResponseContainer();
 
+            var filterDictionary = new Dictionary<Type, QueryParameterContainer>();
+
             foreach (var type in types)
             {
-                QueryParameterContainer queryParams;
                 try
                 {
-                    queryParams = this.ProcessQueryParameters(this.Request, type);
+                    var queryParams = this.ProcessQueryParameters(this.Request, type);
+                    filterDictionary.Add(type, queryParams);
                 }
                 catch (Exception)
                 {
@@ -167,6 +169,15 @@ namespace Redshift.Seed.Modules
                         "The query parameters are badly formatted and cannot be parsed.",
                         this.Context,
                         HttpStatusCode.BadRequest);
+                }
+            }
+
+            foreach (var type in types)
+            {
+                if (filterDictionary.Values.Any(x => x.IsFiltered) && !filterDictionary[type].IsFiltered)
+                {
+                    // if some typpe is filtered but this type is not, exclude it
+                    continue;
                 }
 
                 var typeErrors = ApiHelper.GetTypeErrors(this.Negotiate, entity, type, out var attributes, this.Context);
@@ -196,8 +207,8 @@ namespace Redshift.Seed.Modules
                                 null,
                                 new object[]
                                 {
-                                    queryParams.FilterList, queryParams.Limit, queryParams.Offset,
-                                    queryParams.OrderProperty, queryParams.IsDescending
+                                    filterDictionary[type].FilterList, filterDictionary[type].Limit, filterDictionary[type].Offset,
+                                    filterDictionary[type].OrderProperty, filterDictionary[type].IsDescending
                                 })).ToList();
                 }
                 catch (Exception e)

@@ -25,6 +25,7 @@
 
 namespace Redshift.Orm.Database
 {
+    using System.Reflection;
     using Npgsql;
 
     /// <summary>
@@ -32,6 +33,11 @@ namespace Redshift.Orm.Database
     /// </summary>
     public interface IWhereQueryContainer
     {
+        /// <summary>
+        /// Gets or sets the property
+        /// </summary>
+        PropertyInfo Property { get; set; }
+
         /// <summary>
         /// Gets the sql string representing the where statements.
         /// </summary>

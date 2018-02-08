@@ -44,7 +44,7 @@ namespace Redshift.Seed.Model
 
             // type property resolver
             EntityResolverMap.TypeToPropertyResolverMap.TryAdd(typeof(User), UserResolver.PropertyMap);
-            EntityResolverMap.TypeToPropertyResolverMap.TryAdd(typeof(Usergroup), UserResolver.PropertyMap);
+            EntityResolverMap.TypeToPropertyResolverMap.TryAdd(typeof(Usergroup), UsergroupResolver.PropertyMap);
 
             // type property resolver
             EntityResolverMap.ApiRouteToPropertyResolverMap.TryAdd("User", UserResolver.PropertyMap);

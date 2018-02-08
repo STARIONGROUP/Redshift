@@ -61,7 +61,7 @@ namespace Redshift.Orm.Tests.Database
             
             queries.Add(new WhereQueryContainer() { Comparer = "=", Property = thing.GetPropertyInfoFromName("Uuid"), Value = new List<object>() { Guid.NewGuid(), Guid.NewGuid() } });
             queries.Add(new WhereQueryContainer() { Comparer = "=", Property = thing.GetPropertyInfoFromName("ThingType"), Value = new List<object>() { Guid.NewGuid(), Guid.NewGuid() } });
-            queries.Add(new PatternWhereQueryContainer() { Property = new List<PropertyInfo>() { thing.GetPropertyInfoFromName("ThingType"), thing.GetPropertyInfoFromName("Uuid") }, Value = "dsf"});
+            queries.Add(new PatternWhereQueryContainer() { Properties = new List<PropertyInfo>() { thing.GetPropertyInfoFromName("ThingType"), thing.GetPropertyInfoFromName("Uuid") }, Value = "dsf"});
             connector.DecomposeWhereStatements(ref conn, ref sql, queries, 10, 2, null, false);
 
             Console.WriteLine(sql);

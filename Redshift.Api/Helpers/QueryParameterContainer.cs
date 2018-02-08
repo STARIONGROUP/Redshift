@@ -32,6 +32,7 @@ namespace Redshift.Api.Helpers
     using System.Reflection;
     using Nancy;
     using Orm.Database;
+    using Orm.EntityObject;
 
     /// <summary>
     /// QueryParameterContainer resolves and stores query parameters
@@ -154,8 +155,9 @@ namespace Redshift.Api.Helpers
                 this.Offset = (this.PageNumber - 1) * this.Limit;
             }
 
-            // TODO: This property name should not be hardwired.
-            this.OrderProperty = entityType.GetProperty("Uuid");
+            var primaryKey = !(Activator.CreateInstance(entityType) is IEntityObject instance) ? "Uuid" : instance.PrimaryKey;
+
+            this.OrderProperty = entityType.GetProperty(primaryKey);
             this.IsDescending = true;
 
             if (desc != null)

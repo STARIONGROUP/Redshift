@@ -46,13 +46,18 @@ namespace Redshift.Orm.Database
         /// </summary>
         public PatternWhereQueryContainer()
         {
-            this.Property = new List<PropertyInfo>();
+            this.Properties = new List<PropertyInfo>();
         }
 
         /// <summary>
         /// Gets or sets the property
         /// </summary>
-        public List<PropertyInfo> Property { get; set; }
+        public PropertyInfo Property { get; set; }
+
+        /// <summary>
+        /// Gets or sets the property
+        /// </summary>
+        public List<PropertyInfo> Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the value
@@ -66,7 +71,7 @@ namespace Redshift.Orm.Database
         public string GetSqlString()
         {
             var queryList = new List<string>();
-            foreach (var property in this.Property)
+            foreach (var property in this.Properties)
             {
                 var columnName = EntityHelper.GetColumnNameFromProperty(property);
 
@@ -82,7 +87,7 @@ namespace Redshift.Orm.Database
         /// <param name="cmd">The command.</param>
         public void InsertParameterValues(ref NpgsqlCommand cmd)
         {
-            foreach (var property in this.Property)
+            foreach (var property in this.Properties)
             {
                 var val = this.Value;
 

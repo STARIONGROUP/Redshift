@@ -33,7 +33,6 @@ namespace Redshift.Api
 
     /// <summary>
     /// Utility class that is responsible for instantiating a <see cref="Thing"/>.
-    /// TODO: Create model meta data registration mechanism.
     /// </summary>
     public static class EntityResolverMap
     {
