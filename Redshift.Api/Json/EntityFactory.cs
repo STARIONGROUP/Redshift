@@ -26,6 +26,7 @@
 namespace Redshift.Api.Json
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Newtonsoft.Json.Linq;
 
@@ -48,7 +49,7 @@ namespace Redshift.Api.Json
         /// <returns>
         /// The collection of <see cref="Thing"/>
         /// </returns>
-        public static IEnumerable<IEntityObject> ToEntities(this JObject dataObject, Dictionary<string, Func<JObject, IEntityObject>> entityConstructorMap)
+        public static IEnumerable<IEntityObject> ToEntities(this JObject dataObject, ConcurrentDictionary<string, Func<JObject, IEntityObject>> entityConstructorMap)
         {
             foreach (var property in dataObject.Properties())
             {

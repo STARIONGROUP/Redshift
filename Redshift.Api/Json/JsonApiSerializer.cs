@@ -26,6 +26,7 @@
 namespace Redshift.Api.Json
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
 
@@ -62,7 +63,7 @@ namespace Redshift.Api.Json
         /// <summary>
         /// Gets or sets the entity map.
         /// </summary>
-        public Dictionary<string, Func<JObject, IEntityObject>> EntityMap { get; set; }
+        public ConcurrentDictionary<string, Func<JObject, IEntityObject>> DeserializationMap { get; set; }
 
         /// <summary>
         /// Gets the list of extensions.
@@ -113,12 +114,12 @@ namespace Redshift.Api.Json
         /// <returns>The populated request object.</returns>
         public HttpRequest Deserialize(string body)
         {
-            if (this.EntityMap == null)
+            if (this.DeserializationMap == null)
             {
                 throw new Exception("The entity map is not set for the deserializer.");
             }
 
-            this.serializer.Converters.Add(new HttpRequestConverter(this.EntityMap));
+            this.serializer.Converters.Add(new HttpRequestConverter(this.DeserializationMap));
 
             HttpRequest data;
 

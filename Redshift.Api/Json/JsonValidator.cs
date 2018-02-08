@@ -56,7 +56,7 @@ namespace Redshift.Api.Json
         /// </returns>
         public HttpRequest Process(string body, Dictionary<string, Func<JObject, IEntityObject>> entityMap)
         {
-            this.serializer.EntityMap = entityMap;
+            this.serializer.DeserializationMap = entityMap;
 
             var result = this.serializer.Deserialize(body);
 

@@ -17,7 +17,7 @@ namespace Redshift.Sample.Model
         [IgnoreDataMember]
         public override string PrimaryKey => "Id";
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [ApiDescription("A unique username used for authenticaltion.")]
         public string Username { get; set; }

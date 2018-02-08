@@ -26,6 +26,7 @@
 namespace Redshift.Api.Json
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -46,7 +47,7 @@ namespace Redshift.Api.Json
         /// <param name="entityMap">
         /// The entity map.
         /// </param>
-        public HttpRequestConverter(Dictionary<string, Func<JObject, IEntityObject>> entityMap)
+        public HttpRequestConverter(ConcurrentDictionary<string, Func<JObject, IEntityObject>> entityMap)
         {
             this.EntityMap = entityMap;
         }
@@ -64,7 +65,7 @@ namespace Redshift.Api.Json
         /// <summary>
         /// Gets the entity map.
         /// </summary>
-        public Dictionary<string, Func<JObject, IEntityObject>> EntityMap { get; }
+        public ConcurrentDictionary<string, Func<JObject, IEntityObject>> EntityMap { get; }
 
         /// <summary>
         /// Override of the can convert type check.
