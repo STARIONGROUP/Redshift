@@ -26,6 +26,7 @@
 namespace Redshift.Api.Json
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
 
     using Newtonsoft.Json.Linq;
@@ -54,7 +55,7 @@ namespace Redshift.Api.Json
         /// <returns>
         /// A HTTP request object with all the entities.
         /// </returns>
-        public HttpRequest Process(string body, Dictionary<string, Func<JObject, IEntityObject>> entityMap)
+        public HttpRequest Process(string body, ConcurrentDictionary<string, Func<JObject, IEntityObject>> entityMap)
         {
             this.serializer.DeserializationMap = entityMap;
 

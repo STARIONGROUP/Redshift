@@ -1,38 +1,16 @@
-﻿#region Copyright
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="20180126121430_2_3_4_MyNewMigration.cs" company="RHEA System S.A.">
-//    Copyright (c) 2018 RHEA System S.A.
-//
-//    Author: Alex Vorobiev
-//
-//    This file is part of Redshift.Sample.
-//
-//    Redshift.Sample is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Redshift.Sample is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Redshift.Sample.  If not, see <http://www.gnu.org/licenses/>.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-#endregion
-
-namespace Redshift.Sample.Migrations
+﻿namespace Redshift.Seed.Migrations
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
 
     using Redshift.Orm.Database;
 
     /// <summary>
-    /// The purpose of the <see cref="MyNewMigration"/> migration is to ....
+    /// Creates migration table.
     /// </summary>
-    internal class MyNewMigration : MigrationBase
+    internal class CreateMigrationTable : MigrationBase
     {
         /// <summary>
         /// Gets the unique <see cref="Guid"/> of the <see cref="IMigration"/>. This must be generated pre-compile time.
@@ -41,7 +19,7 @@ namespace Redshift.Sample.Migrations
         {
             get 
             { 
-                return Guid.Parse("6e58bd25-5bf2-43d7-88de-ffeb89036cf7"); 
+                return Guid.Parse("8a5ec392-3712-4715-9663-85e050f983cc"); 
             }
         }
 
@@ -64,18 +42,18 @@ namespace Redshift.Sample.Migrations
         {
             get
             {
-                return string.Format("{0}_{1}", "20180126121430", this.Name);
+                return string.Format("{0}_{1}", "20180208103552", this.Name);
             }
         }
 
         /// <summary>
         /// Gets the description.
         /// </summary>
-        public override string Description
+        public override string Description 
         {
             get 
             { 
-                return "Some description here."; 
+                return "Creates the Migration table so that the application can write migration patch logs."; 
             }
         }
 
@@ -86,7 +64,7 @@ namespace Redshift.Sample.Migrations
         {
             get
             {
-                return new Version(2, 3, 4);
+                return new Version(0, 0, 0);
             }
         }
 
@@ -95,7 +73,15 @@ namespace Redshift.Sample.Migrations
         /// </summary>
         public override void Migrate()
         {
-            // what to do to migrate
+            var migrationTableTemplate = new MigrationRecord();
+            DatabaseSession.Instance.Connector.CreateTable(migrationTableTemplate);
+
+            foreach (var property in migrationTableTemplate.GetType().GetProperties().Where(p => !CustomAttributeExtensions.IsDefined(p, typeof(IgnoreDataMemberAttribute))).ToList())
+            {
+                DatabaseSession.Instance.Connector.CreateColumn(property, migrationTableTemplate);
+            }
+
+            DatabaseSession.Instance.Connector.CreatePrimaryKeyConstraint(migrationTableTemplate);
         }
 
         /// <summary>
@@ -104,7 +90,7 @@ namespace Redshift.Sample.Migrations
         /// <remarks>To be used in case of migration failure. If the migration is fully transactioned, then this can be overriden and left blank. If it is not, then you can safely run this.Reverse().</remarks>
         public override void MigrationReset()
         {
-            // what to do in case of migration fail
+
         }
 
         /// <summary>
@@ -112,18 +98,16 @@ namespace Redshift.Sample.Migrations
         /// </summary>
         public override void Reverse()
         {
-            // what to do to roll back the migration
+            var migrationTableTemplate = new MigrationRecord();
+            DatabaseSession.Instance.Connector.DeleteTable(migrationTableTemplate);
         }
 
         /// <summary>
-        /// The seeds the database if needed. This method can be left empty.
+        /// Deletes the record from the migration table.
         /// </summary>
-        public override void Seed()
+        public override void Delete()
         {
-            // any required seeding
-#if DEBUG
-
-#endif
+            // nothing needed
         }
 
         /// <summary>
@@ -132,8 +116,8 @@ namespace Redshift.Sample.Migrations
         /// <returns>True if the migration should run.</returns>
         public override bool ShouldMigrate()
         {
-            // migration condition
-            return base.ShouldMigrate();
+            var migrationTableTemplate = new MigrationRecord();
+            return !DatabaseSession.Instance.Connector.CheckTableExists(migrationTableTemplate);
         }
     }
 }

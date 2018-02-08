@@ -7,10 +7,14 @@
     using Nancy.Responses.Negotiation;
     using Nancy.TinyIoc;
     using NLog;
-    using Redshift.Api;
-    using Redshift.Api.Json;
-    using Redshift.Orm.Database;
+    using Api;
+    using Api.Json;
+    using Model;
+    using Orm.Database;
 
+    /// <summary>
+    /// Application bootstrapper.
+    /// </summary>
     public class Bootstrapper : DefaultNancyBootstrapper
     {
         /// <summary>
@@ -29,9 +33,7 @@
 
                 var processors = new[]
                 {
-                    typeof(Redshift.Api.Json.JsonProcessor),
-                    typeof(ViewProcessor),
-                    typeof(XmlProcessor)
+                    typeof(Api.Json.JsonProcessor)
                 };
 
                 return NancyInternalConfiguration.WithOverrides(x => x.ResponseProcessors = processors);
@@ -47,12 +49,15 @@
         /// <param name="pipelines">The pipelines used in this application.</param>
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            //Logger.Info("Bootstrapping Application");
+            Logger.Info("Bootstrapping Application");
 
-            //Logger.Info("Setting up Pipelines");
+            Logger.Info("Setting up Pipelines");
             base.ApplicationStartup(container, pipelines);
 
-            //Logger.Info("Setting up Serialization Resolver");
+            Logger.Info("Setting up Serialization Resolver");
+
+            // register model resolvers
+            SeedResolverRegistry.Register();
 
             // register serializer
             container.Register<ISerializer, JsonApiSerializer>().AsSingleton();
@@ -66,32 +71,36 @@
 
             try
             {
-                //Logger.Info("Initializing database connection...");
+                Logger.Info("Initializing database connection...");
 
                 DatabaseSession.Instance.CreateConnector("localhost", 5432, "redshiftseed", "redshiftseed", "redshift", ConnectorType.Postgresql);
 
-                //Logger.Info("Database connected...");
+                Logger.Info("Database connected...");
             }
             catch (Exception ex)
             {
-                //Logger.Info("Failed to establish database connected...");
+                Logger.Info("Failed to establish database connected...");
                 throw new HttpRequestException(string.Format("The connection to database could not be made: {0}", ex.Message));
             }
 
 #if DEBUG
-            //Logger.Info("DEBUG Detected. Reseting database.");
 
+            Logger.Info("DEBUG Detected. Reseting database.");
+
+            // dev mode only! wipe the db to remigrate and reseed, should always delete this once the first few migrations are finalized.
             MigrationEngine.DropAllTables("public");
 
-            //Logger.Info("Reseting database complete...");
+            Logger.Info("Reseting database complete...");
+
 #endif
-            //Logger.Info("Initializing migration engine...");
+
+            Logger.Info("Initializing migration engine...");
 
             MigrationEngine.Migrate();
 
-            //Logger.Info("Migrations done...");
+            Logger.Info("Migrations done...");
 
-            //Logger.Info("Application Finished Bootstrapping");
+            Logger.Info("Application Finished Bootstrapping");
         }
     }
 }

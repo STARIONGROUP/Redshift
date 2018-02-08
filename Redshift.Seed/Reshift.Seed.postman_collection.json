@@ -1,0 +1,653 @@
+{
+	"info": {
+		"name": "Reshift.Seed",
+		"_postman_id": "c7ff94ea-a7dc-6744-e8bf-a2bd8224c944",
+		"description": "Redshift sample api.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9abf9c72-306c-47c8-9fc6-e43390dc983d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Thing (Abstract)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95f8c702-16a6-4ff7-a303-469d7bb1764e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"2 usergroups returned\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(2);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/Thing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Thing"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c3160a6-37c2-4ee7-8b2a-de866c99b97c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"2 usergroups contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(2);",
+							"});",
+							"",
+							"pm.environment.set(\"group_id\", pm.response.json().data.usergroup[0].uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ba814df-1698-4aba-8e06-985fbd7eedae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"1 usergroup contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup/{{group_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup",
+						"{{group_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0803ed14-4c64-452d-aa3b-f776460ae8b7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"1 usergroup contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(1);",
+							"});",
+							"",
+							"pm.environment.set(\"created_group_id\", pm.response.json().data.usergroup[0].uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"SomeGroup\",\n    \"permissions\": [\n        \"CanAll\"\n    ],\n    \"uuid\": \"04ec67fb-79b2-4986-a010-a6dc1baf075d\",\n    \"modifiedOn\": \"2018-02-08T12:55:47\",\n    \"createdOn\": \"2018-02-08T12:55:47\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb275d69-fce9-43df-ace0-8f850f93a352",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"1 usergroup contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"name changed\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup[0].name).to.eql('SomeGroup12');",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"SomeGroup12\",\n    \"permissions\": [\n        \"CanAll\"\n    ],\n    \"uuid\": \"04ec67fb-79b2-4986-a010-a6dc1baf075d\",\n    \"modifiedOn\": \"2018-02-08T12:55:47\",\n    \"createdOn\": \"2018-02-08T12:55:47\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup/{{created_group_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup",
+						"{{created_group_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroups verify 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12664726-e0aa-4d9a-a296-067471af8bff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"3 usergroups contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(3);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fe7e7ce-c1b0-4975-9b33-b97ed371a3af",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup/{{created_group_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup",
+						"{{created_group_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Usergroups verify deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c3160a6-37c2-4ee7-8b2a-de866c99b97c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"2 usergroups contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup.length).to.eql(2);",
+							"});",
+							"",
+							"pm.environment.set(\"group_id\", pm.response.json().data.usergroup[0].uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/Usergroup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"Usergroup"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e9d9234-d44c-44e3-b798-18ce178c91b8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"no usergroups returned\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.usergroup).to.eql(undefined);",
+							"});",
+							"",
+							"pm.environment.set(\"user_id\", pm.response.json().data.user[0].uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/User",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"User"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1947107a-8985-4a87-8c4d-c4d80f1fd703",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"1 user contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.user.length).to.eql(1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/v1/User/{{user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"User",
+						"{{user_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1118cad-18cf-4378-8818-8bfec134e503",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"1 users contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.user.length).to.eql(1);",
+							"});",
+							"",
+							"pm.environment.set(\"created_user_id\", pm.response.json().data.user[0].uuid);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uuid\": \"bad1fe06-dde1-4168-90f1-b2e85d3df605\",\n    \"username\": \"admin3\",\n    \"password\": \"fdf\",\n    \"email\": \"blaaa@blaaa.com\",\n    \"usergroup\": \"{{group_id}}\",\n    \"modifiedOn\": \"2018-02-08T13:29:10\",\n    \"createdOn\": \"2018-02-08T13:29:10\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/User",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"User"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "223db336-86d6-4643-b3f6-f5406087fe09",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"1 users contained\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.user.length).to.eql(1);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uuid\": \"bad1fe06-dde1-4168-90f1-b2e85d3df605\",\n    \"username\": \"admin43\",\n    \"password\": \"fd33f\",\n    \"email\": \"blaaa3@blaaa.co3m\",\n    \"usergroup\": \"{{group_id}}\",\n    \"modifiedOn\": \"2018-02-08T13:29:10\",\n    \"createdOn\": \"2018-02-08T13:29:10\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/User/{{created_user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"User",
+						"{{created_user_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e61e9e2a-eeaf-4cff-a4f4-b19f3944fc2b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/User/{{created_user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"User",
+						"{{created_user_id}}"
+					]
+				},
+				"description": "home route"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "0eaee1a5-bcaa-480f-81f3-95fd22577866",
+			"key": "uri",
+			"value": "localhost",
+			"type": "text"
+		},
+		{
+			"id": "12a73ac6-3e6b-4fd6-a60c-91f69a68d172",
+			"key": "port",
+			"value": "5000",
+			"type": "text"
+		}
+	]
+}

@@ -1,13 +1,13 @@
-﻿namespace Redshift.Sample.Migrations
+﻿namespace Redshift.Seed.Migrations
 {
     using System;
-
+    using Model;
     using Redshift.Orm.Database;
 
     /// <summary>
-    /// The purpose of the <see cref="MySecondMigration"/> migration is to ....
+    /// The purpose of the <see cref="CreateUsergroupTable"/> migration is to ....
     /// </summary>
-    internal class MySecondMigration : MigrationBase
+    internal class CreateUsergroupTable : MigrationBase
     {
         /// <summary>
         /// Gets the unique <see cref="Guid"/> of the <see cref="IMigration"/>. This must be generated pre-compile time.
@@ -16,7 +16,7 @@
         {
             get 
             { 
-                return Guid.Parse("99df23d5-ec27-4a50-bbfb-68828b9b6aa8"); 
+                return Guid.Parse("d918d83e-3a53-40c8-aa1b-afd4bfcb83b8"); 
             }
         }
 
@@ -39,7 +39,7 @@
         {
             get
             {
-                return string.Format("{0}_{1}", "20180207094932", this.Name);
+                return string.Format("{0}_{1}", "20180208103554", this.Name);
             }
         }
 
@@ -50,7 +50,7 @@
         {
             get 
             { 
-                return "Some description here."; 
+                return "Creates the usergroup table."; 
             }
         }
 
@@ -61,7 +61,7 @@
         {
             get
             {
-                return new Version(2, 4, 3);
+                return new Version(0, 1, 0);
             }
         }
 
@@ -70,7 +70,21 @@
         /// </summary>
         public override void Migrate()
         {
-            // what to do to migrate
+            var template = Usergroup.Template();
+
+            var transaction = DatabaseSession.Instance.CreateTransaction();
+
+            DatabaseSession.Instance.Connector.CreateTable(template, transaction);
+
+            DatabaseSession.Instance.Connector.CreateColumn(typeof(Usergroup).GetProperty("Uuid"), template, transaction);
+            DatabaseSession.Instance.Connector.CreateColumn(typeof(Usergroup).GetProperty("ModifiedOn"), template, transaction);
+            DatabaseSession.Instance.Connector.CreateColumn(typeof(Usergroup).GetProperty("CreatedOn"), template, transaction);
+            DatabaseSession.Instance.Connector.CreateColumn(typeof(Usergroup).GetProperty("Name"), template, transaction);
+            DatabaseSession.Instance.Connector.CreateColumn(typeof(Usergroup).GetProperty("Permissions"), template, transaction);
+
+            DatabaseSession.Instance.Connector.CreatePrimaryKeyConstraint(template, transaction);
+
+            DatabaseSession.Instance.CommitTransaction(transaction);
         }
 
         /// <summary>
@@ -87,7 +101,12 @@
         /// </summary>
         public override void Reverse()
         {
-            // what to do to roll back the migration
+            var template = Usergroup.Template();
+            var transaction = DatabaseSession.Instance.CreateTransaction();
+            DatabaseSession.Instance.Connector.DeleteTable(template, transaction);
+
+            // commit transaction
+            DatabaseSession.Instance.Connector.CommitTransaction(transaction);
         }
 
         /// <summary>

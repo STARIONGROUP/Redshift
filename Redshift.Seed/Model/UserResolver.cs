@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json.Linq;
-using Redshift.Api.Helpers;
-using Redshift.Api.Json;
-
-namespace Redshift.Sample.Model
+﻿namespace Redshift.Seed.Model
 {
+    using System;
+    using System.Collections.Generic;
+    using Api.Json;
+    using Newtonsoft.Json.Linq;
+
     public static class UserResolver
     {
         /// <summary>
@@ -18,10 +16,22 @@ namespace Redshift.Sample.Model
                 "uuid", typeof(Guid)
             },
             {
+                "modifiedOn", typeof(DateTime)
+            },
+            {
+                "createdOn", typeof(DateTime)
+            },
+            {
                 "username", typeof(string)
             },
             {
                 "email", typeof(string)
+            },
+            {
+                "password", typeof(string)
+            },
+            {
+                "usergroup", typeof(Guid)
             }
         };
 
@@ -34,8 +44,26 @@ namespace Redshift.Sample.Model
         {
             var iid = jObject["uuid"].ToObject<Guid>();
 
-            var user = new User();
-            
+            var user = new User
+            {
+                Uuid = iid
+            };
+
+            if (!jObject["modifiedOn"].IsNullOrEmpty())
+            {
+                user.ModifiedOn = jObject["modifiedOn"].ToObject<DateTime>();
+            }
+
+            if (!jObject["createdOn"].IsNullOrEmpty())
+            {
+                user.CreatedOn = jObject["createdOn"].ToObject<DateTime>();
+            }
+
+            if (!jObject["password"].IsNullOrEmpty())
+            {
+                user.Password = jObject["password"].ToObject<string>();
+            }
+
             if (!jObject["username"].IsNullOrEmpty())
             {
                 user.Username = jObject["username"].ToObject<string>();
@@ -44,6 +72,11 @@ namespace Redshift.Sample.Model
             if (!jObject["email"].IsNullOrEmpty())
             {
                 user.Email = jObject["email"].ToObject<string>();
+            }
+
+            if (!jObject["usergroup"].IsNullOrEmpty())
+            {
+                user.Usergroup = jObject["usergroup"].ToObject<Guid>();
             }
 
             After(user, jObject);
@@ -57,10 +90,7 @@ namespace Redshift.Sample.Model
         /// <param name="jObject">The json object to deserialize from.</param>
         public static void After(User user, JObject jObject)
         {
-            if (!jObject["password"].IsNullOrEmpty())
-            {
-                user.Password = jObject["password"].ToObject<string>();
-            }
+
         }
     }
 }
