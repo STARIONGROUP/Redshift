@@ -2,7 +2,14 @@ Redshift is a framework encompassing various helper libraries used to implement 
 
   - Redshift.Orm
   - Redshift.Api
-  
+
+## NuGet
+
+Package | Link
+--------|--------
+Redshift.Api | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Api)](https://www.nuget.org/packages/Redshift.Api/)
+Redshift.Orm | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Orm)](https://www.nuget.org/packages/Redshift.Orm/)
+
 ## Build Status
 
 AppVeyor is used to build and test Redshift
