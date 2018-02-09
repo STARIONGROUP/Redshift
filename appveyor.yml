@@ -22,7 +22,7 @@ test:
       - AppVeyorExclusion
 after_test:
   - .\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:".\tools\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:".\Redshift.Orm.Tests\bin\Debug\net452\Redshift.Orm.Tests.dll" -output:"coverage.xml"
-  - codecov -f "coverage.xml" -t e4567a09-8a81-4da7-b003-57c8d7d41dbb
+  - codecov -f "coverage.xml" -t 6c8ebd66-9dd1-42b7-b2ba-7f23f68a0ec2
 deploy:
   provider: NuGet
   name: production
