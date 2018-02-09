@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InMemoryDatabaseSessionBaseTestFixture.cs" company="RHEA System S.A.">
+// <copyright file="MigrationVersionB.cs" company="RHEA System S.A.">
 //    Copyright (c) 2018 RHEA System S.A.
 //
 //    Author: Alex Vorobiev
@@ -23,30 +23,50 @@
 // --------------------------------------------------------------------------------------------------------------------
 #endregion
 
-namespace Redshift.Orm.Tests
+namespace Redshift.Orm.Tests.HelperModel.Migrations
 {
-    using NUnit.Framework;
+    using System;
+    using Orm.Database;
+    using Redshift.Orm.Tests.HelperModel;
 
-    using Redshift.Orm.Database;
-
-    [TestFixture]
-    public abstract class InMemoryDatabaseSessionBaseTestFixture
+    public class MigrationVersionB : MigrationBase
     {
-        [SetUp]
-        public virtual void SetUp()
+        public override string Description
         {
-            // initialize new inmem database
-            DatabaseSession.Instance.CreateConnector(new InMemoryMockDatabaseConnector());
-
-            // populate data
-            var generator = new TestDataGenerator();
-            //generator.Populate();
+            get { return "A migration in version 1 second go"; }
         }
 
-        [TearDown]
-        public virtual void TearDown()
+        public override Version Version
         {
-            DatabaseSession.Instance.Dispose();
+            get { return new Version(1, 0, 0); }
+        }
+
+        public override string FullName
+        {
+            get
+            {
+                return string.Format("{0}_{1}", "201509281002", this.Name);
+            }
+        }
+
+        public override Guid Uuid
+        {
+            get { return Guid.Parse("A2C5F191-C90A-4703-B274-8085EBCE65C7"); }
+        }
+
+        public override string Name
+        {
+            get { return this.GetType().Name; }
+        }
+
+        public override void Migrate()
+        {
+            // do nothing
+        }
+
+        public override void Reverse()
+        {
+
         }
     }
 }

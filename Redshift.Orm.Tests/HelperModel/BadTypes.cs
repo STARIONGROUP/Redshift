@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TestDataGenerator.cs" company="RHEA System S.A.">
+// <copyright file="BadTypes.cs" company="RHEA System S.A.">
 //    Copyright (c) 2018 RHEA System S.A.
 //
 //    Author: Alex Vorobiev
@@ -23,28 +23,17 @@
 // --------------------------------------------------------------------------------------------------------------------
 #endregion
 
-namespace Redshift.Orm.Tests
+namespace Redshift.Orm.Tests.HelperModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Orm.EntityObject;
 
-    /// <summary>
-    /// TestDataGenerator
-    /// </summary>
-    public class TestDataGenerator
+    public class BadTypes : EntityObject<BadTypes>
     {
-        public void Populate()
-        {
-            // user
-            var user = new User(Guid.NewGuid())
-            {
-                Username = "sa"
-            };
+        public Guid Id { get; set; }
 
-            user.Save();
-        }
+        public sbyte CustomType { get; set; }
+        
+        public char[] charArray { get; set; }
     }
 }

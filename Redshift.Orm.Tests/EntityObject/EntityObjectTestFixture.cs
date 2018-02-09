@@ -95,7 +95,7 @@ namespace Redshift.Orm.Tests.EntityObject
     }
 
     [TestFixture]
-    public class EntityObjectTestFixture : InMemoryDatabaseSessionBaseTestFixture
+    public class EntityObjectTestFixture
     {
         [Test]
         public void VerifyThatSubsetReturns()
