@@ -1,3 +1,5 @@
+# Redshift
+
 Redshift is a framework encompassing various helper libraries used to implement server side applications. The following libraries are made available under the [GNU LGPL](https://www.gnu.org/licenses/lgpl.nl.html):
 
   - Redshift.Orm
