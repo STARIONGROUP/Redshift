@@ -39,7 +39,7 @@ namespace Redshift.Orm.Tests.HelperModel
 
         public DateTime SomeDate { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid Uuid { get; set; }
 
         public long SomeLong { get; set; }
 

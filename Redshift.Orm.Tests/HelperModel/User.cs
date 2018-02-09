@@ -30,7 +30,7 @@ namespace Redshift.Orm.Tests.HelperModel
 
     public class User : EntityObject<User>
     {
-        public Guid Id { get; set; }
+        public Guid Uuid { get; set; }
 
         public string Name { get; set; }
 

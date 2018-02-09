@@ -86,7 +86,10 @@ namespace Redshift.Orm.Helpers
         /// <returns>A string padded with quotes.</returns>
         public static string MakePostgreSqlSafe(this string stringToPad)
         {
-            return $"\"{stringToPad}\"";
+            // trim any quotes out
+            var trimmed = stringToPad.Replace("\"", string.Empty);
+
+            return $"\"{trimmed}\"";
         }
     }
 }

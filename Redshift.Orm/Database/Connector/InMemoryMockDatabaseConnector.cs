@@ -27,11 +27,13 @@ namespace Redshift.Orm.Database
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
 
     using Redshift.Orm.EntityObject;
 
+    [ExcludeFromCodeCoverage]
     public class InMemoryMockDatabaseConnector : IDatabaseConnector
     {
         private readonly Dictionary<Guid, IEntityObject> Cache = new Dictionary<Guid, IEntityObject>();

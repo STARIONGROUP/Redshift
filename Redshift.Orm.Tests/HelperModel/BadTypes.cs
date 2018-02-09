@@ -30,7 +30,7 @@ namespace Redshift.Orm.Tests.HelperModel
 
     public class BadTypes : EntityObject<BadTypes>
     {
-        public Guid Id { get; set; }
+        public Guid Uuid { get; set; }
 
         public sbyte CustomType { get; set; }
         

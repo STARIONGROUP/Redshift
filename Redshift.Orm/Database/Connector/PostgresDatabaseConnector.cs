@@ -58,6 +58,11 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void CreateTable(IEntityObject thing, object transaction = null)
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             this.CreateTable(thing.TableName, transaction);
         }
 
@@ -124,6 +129,11 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void DeleteTable(IEntityObject thing, object transaction = null)
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             this.DeleteTable(thing.TableName, transaction);
         }
 
@@ -262,6 +272,16 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void CreateColumn(PropertyInfo property, IEntityObject thing, object transaction = null)
         {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             if (property.IsDefined(typeof(DbIgnoreAttribute)) || property.IsDefined(typeof(IgnoreDataMemberAttribute)))
             {
                 throw new ArgumentException($"Can't create column marked as ignored. {EntityHelper.GetColumnNameFromProperty(property)}", nameof(property));
@@ -304,6 +324,16 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void DeleteColumn(PropertyInfo property, IEntityObject thing, object transaction = null)
         {
+            if (property == null)
+            {
+                throw new ArgumentNullException(nameof(property));
+            }
+
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             this.DeleteColumn(EntityHelper.GetColumnNameFromProperty(property), thing.TableName, transaction);
         }
 
@@ -337,6 +367,11 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void CreatePrimaryKeyConstraint(IEntityObject thing, object transaction = null)
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             var name = EntityHelper.GetColumnNameFromProperty(thing.GetType().GetProperty(thing.PrimaryKey));
             this.CreatePrimaryKeyConstraint(thing.TableName, new[] { name }, transaction);
         }
@@ -371,6 +406,11 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void DeletePrimaryKeyConstraint(PropertyInfo property, IEntityObject thing, object transaction = null)
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             this.DeletePrimaryKeyConstraint(thing.TableName, transaction);
         }
 
@@ -386,7 +426,7 @@ namespace Redshift.Orm.Database
 
             var transactionSafe = this.ManageTransaction(transaction, out con, out tran);
 
-            var sql = $"ALTER TABLE {table.MakePostgreSqlSafe()} DROP CONSTRAINT {table.MakePostgreSqlSafe()}_pkey;";
+            var sql = $"ALTER TABLE {table.MakePostgreSqlSafe()} DROP CONSTRAINT {(table + "_pkey").MakePostgreSqlSafe()};";
 
             var cmd = new NpgsqlCommand(sql, con, tran);
 
@@ -489,6 +529,21 @@ namespace Redshift.Orm.Database
             IEntityObject toThing,
             object transaction = null)
         {
+            if (fromProperty == null)
+            {
+                throw new ArgumentNullException(nameof(fromProperty));
+            }
+
+            if (fromThing == null)
+            {
+                throw new ArgumentNullException(nameof(fromThing));
+            }
+
+            if (toProperty == null)
+            {
+                throw new ArgumentNullException(nameof(toThing));
+            }
+
             var constraintName = this.CreateForeignKeyConstraintName(fromProperty, fromThing, toProperty, toThing);
             this.DeleteForeignKeyConstraint(fromThing.TableName, constraintName, transaction);
         }
@@ -546,6 +601,21 @@ namespace Redshift.Orm.Database
         /// <returns>The string representation of the foreign key constraint name.</returns>
         public string CreateForeignKeyConstraintName(PropertyInfo fromProperty, IEntityObject fromThing, PropertyInfo toProperty, IEntityObject toThing)
         {
+            if (fromProperty == null)
+            {
+                throw new ArgumentNullException(nameof(fromProperty));
+            }
+
+            if (fromThing == null)
+            {
+                throw new ArgumentNullException(nameof(fromThing));
+            }
+
+            if (toProperty == null)
+            {
+                throw new ArgumentNullException(nameof(toThing));
+            }
+
             var tableName = fromThing.TableName;
             var tableToName = toThing.TableName;
 
@@ -605,6 +675,11 @@ namespace Redshift.Orm.Database
         /// </returns>
         public T CreateRecord<T>(T thing, bool ignoreNull = false, object transaction = null) where T : IEntityObject
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             var propertyInfos =
                 thing.GetType()
                      .GetProperties()
@@ -705,6 +780,11 @@ namespace Redshift.Orm.Database
         /// </returns>
         public T UpdateRecord<T>(T thing, bool ignoreNull = false, object transaction = null) where T : IEntityObject
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             NpgsqlConnection con;
             NpgsqlTransaction tran;
 
@@ -772,6 +852,11 @@ namespace Redshift.Orm.Database
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
         public void DeleteRecord(IEntityObject thing, object transaction = null)
         {
+            if (thing == null)
+            {
+                throw new ArgumentNullException(nameof(thing));
+            }
+
             var primaryKeyProperty = thing.GetType().GetProperty(thing.PrimaryKey);
             var name = EntityHelper.GetColumnNameFromProperty(primaryKeyProperty);
 

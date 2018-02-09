@@ -34,7 +34,7 @@ namespace Redshift.Orm.Tests.HelperModel
         [IgnoreDataMember]
         public override string TableName => "overrideTable";
 
-        public int Id { get; set; }
+        public int Uuid { get; set; }
 
         [EntityColumnNameOverride("stringColumnNameThisIsOverride")]
         public string SomeString { get; set; }
