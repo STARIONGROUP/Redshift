@@ -11,6 +11,8 @@ Branch | Status | Coverage
 ------------ | ------------- | -------------
 master | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/master?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/master) | [![codecov](https://codecov.io/gh/RHEAGROUP/Redshift/branch/master/graph/badge.svg)](https://codecov.io/gh/RHEAGROUP/Redshift)
 development | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/development?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/development) | [![codecov](https://codecov.io/gh/RHEAGROUP/Redshift/branch/development/graph/badge.svg)](https://codecov.io/gh/RHEAGROUP/Redshift)
+
+[![Build history](https://buildstats.info/appveyor/chart/alexatrhea/redshift)](https://ci.appveyor.com/project/alexatrhea/redshift/history)
  
 ## Redshift.Orm
 
