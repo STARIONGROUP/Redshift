@@ -7,12 +7,13 @@ Redshift is a framework encompassing various helper libraries used to implement 
 
 AppVeyor is used to build and test Redshift
 
-Branch | Status
------------- | -------------
-master | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/master?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/master)
-development | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/development?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/development)
+Branch | Status | Coverage
+------------ | ------------- | -------------
+master | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/master?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/master) | [![codecov](https://codecov.io/gh/RHEAGROUP/Redshift/branch/master/graph/badge.svg)](https://codecov.io/gh/RHEAGROUP/Redshift)
+development | [![Build status](https://ci.appveyor.com/api/projects/status/v2tfo0nefpncq9bv/branch/development?svg=true)](https://ci.appveyor.com/project/alexatrhea/redshift/branch/development) | [![codecov](https://codecov.io/gh/RHEAGROUP/Redshift/branch/development/graph/badge.svg)](https://codecov.io/gh/RHEAGROUP/Redshift)
  
 ## Redshift.Orm
+
 An object relational mapping library that enables you to connect your data model to a persistance back-end. As of now only PostgreSQL is supported, but it is envisioned for more database providers to become available.
 
 ### Installation
