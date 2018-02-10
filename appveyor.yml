@@ -21,15 +21,7 @@ build:
   include_nuget_references: true
 before_test:  
     - psql -c "CREATE DATABASE redshifttest WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';" -U postgres
-    - psql -c "CREATE ROLE redshifttest WITH LOGIN PASSWORD '1234';" -U postgres
-    - psql -c "ALTER DATABASE redshifttest OWNER TO redshifttest;" -U postgres
-    - psql -c "GRANT ALL PRIVILEGES ON DATABASE redshifttest TO redshifttest;" -U postgres
-    - psql -c "\connect redshifttest" -U postgres
-    - psql -c "ALTER SCHEMA public OWNER to redshifttest;" -U postgres
-    - psql -c "REVOKE ALL ON SCHEMA public FROM PUBLIC;" -U postgres
-    - psql -c "REVOKE ALL ON SCHEMA public FROM redshifttest;" -U postgres
-    - psql -c "GRANT ALL ON SCHEMA public TO redshifttest;" -U postgres
-    - psql -c "GRANT ALL ON SCHEMA public TO PUBLIC;" -U postgres
+    - psql -U postgres redshifttest < "Redshift.Orm.Tests\setup.sql"
 test:
   assemblies:
     only:
