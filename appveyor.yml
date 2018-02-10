@@ -21,8 +21,10 @@ build:
   include_nuget_references: true
 before_test:  
     - psql -c "CREATE DATABASE redshifttest;" -U postgres
-    - psql -c "CREATE USER redshifttest WITH PASSWORD '1234';" -U postgres
-    - psql -c "GRANT ALL PRIVILEGES ON DATABASE redshifttest TO redshifttest;"
+    - psql -c "CREATE USER redshifttest WITH LOGIN PASSWORD '1234';" -U postgres
+    - psql -c "GRANT ALL PRIVILEGES ON DATABASE redshifttest TO redshifttest;" -U postgres
+    - psql -c "\connect redshifttest" -U postgres
+    - psql -c "GRANT ALL ON SCHEMA public TO redshifttest;" -U postgres
 test:
   assemblies:
     only:
