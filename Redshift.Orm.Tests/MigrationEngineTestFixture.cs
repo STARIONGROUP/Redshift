@@ -31,8 +31,6 @@ namespace Redshift.Orm.Tests
     using HelperModel.Migrations;
     using NUnit.Framework;
     using Redshift.Orm.Database;
-    using Redshift.Orm.Tests;
-    using Redshift.Orm.Tests.HelperModel.Migrations;
 
     [TestFixture]
     public class MigrationEngineTestFixture :OrmBaseTestFixture

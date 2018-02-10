@@ -73,7 +73,7 @@ namespace Redshift.Orm.Database
         /// <param name="connectionType">The connector type</param>
         public void CreateConnector(string host, long port, string databaseName, string username, string password, ConnectorType connectionType = ConnectorType.Postgresql)
         {
-            this.Credentials = new DatabaseCredentials
+            var credentials = new DatabaseCredentials
             {
                 Host = host,
                 Port = port,
@@ -82,12 +82,7 @@ namespace Redshift.Orm.Database
                 Password = password
             };
 
-            switch (connectionType)
-            {
-                case ConnectorType.Postgresql:
-                    this.Connector = new PostgresDatabaseConnector();
-                    break;
-            }
+            this.CreateConnector(credentials, connectionType);
         }
 
         /// <summary>
