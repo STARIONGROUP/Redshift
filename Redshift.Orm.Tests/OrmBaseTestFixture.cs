@@ -35,6 +35,7 @@ namespace Redshift.Orm.Tests
         public virtual void SetUp()
         {
             DatabaseSession.Instance.CreateConnector("localhost", 5432, "redshifttest", "redshifttest", "1234", ConnectorType.Postgresql);
+            MigrationEngine.DropAllTables("public");
         }
     }
 }

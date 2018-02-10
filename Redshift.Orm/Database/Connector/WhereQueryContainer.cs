@@ -98,9 +98,9 @@ namespace Redshift.Orm.Database
             {
                 var val = this.Value[i];
 
-                if (val is DateTime)
+                if (val is DateTime time)
                 {
-                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{i}", NpgsqlDbType.Timestamp, ((DateTime)val).ToUniversalTime());
+                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{i}", NpgsqlDbType.Timestamp, time.ToUniversalTime());
                 }
                 else
                 {

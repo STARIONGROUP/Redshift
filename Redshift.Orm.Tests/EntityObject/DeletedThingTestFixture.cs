@@ -46,6 +46,8 @@ namespace Redshift.Orm.Tests.EntityObject
 
             var thing = new DeletedThing() { Uuid = uuid, ModifiedOn = modifiedOn };
 
+            var thing2 = new DeletedThing(Guid.NewGuid());
+
             Assert.AreEqual(uuid, thing.Uuid);
             Assert.AreEqual(modifiedOn, thing.ModifiedOn);
 

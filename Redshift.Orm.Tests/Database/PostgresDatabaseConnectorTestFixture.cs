@@ -63,7 +63,8 @@ namespace Redshift.Orm.Tests.Database
             
             queries.Add(new WhereQueryContainer() { Comparer = "=", Property = thing.GetPropertyInfoFromName("Uuid"), Value = new List<object>() { Guid.NewGuid(), Guid.NewGuid() } });
             queries.Add(new WhereQueryContainer() { Comparer = "=", Property = thing.GetPropertyInfoFromName("ThingType"), Value = new List<object>() { Guid.NewGuid(), Guid.NewGuid() } });
-            queries.Add(new PatternWhereQueryContainer() { Properties = new List<PropertyInfo>() { thing.GetPropertyInfoFromName("ThingType"), thing.GetPropertyInfoFromName("Uuid") }, Value = "dsf"});
+            queries.Add(new PatternWhereQueryContainer() { Property = thing.GetPropertyInfoFromName("ThingType"), Properties = new List<PropertyInfo>() { thing.GetPropertyInfoFromName("ThingType"), thing.GetPropertyInfoFromName("Uuid") }, Value = "dsf"});
+            queries.Add(new PatternWhereQueryContainer() { Property = thing.GetPropertyInfoFromName("ThingType"), Properties = new List<PropertyInfo>() { thing.GetPropertyInfoFromName("ThingType"), thing.GetPropertyInfoFromName("Uuid") }, Value = DateTime.UtcNow });
             connector.DecomposeWhereStatements(ref conn, ref sql, queries, 10, 2, null, false);
 
             Console.WriteLine(sql);
@@ -359,13 +360,9 @@ namespace Redshift.Orm.Tests.Database
 
             Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateForeignKeyConstraint(fromObject.GetType().GetProperty("Usergroup_Id"), fromObject, toObject.GetType().GetProperty(toObject.PrimaryKey), toObject));
 
-            //Assert.Throws<InvalidDataException>(() => fromObject.Save());
-
             toObject.Save();
 
             Assert.DoesNotThrow(() => fromObject.Save());
-
-            //Assert.Throws<InvalidDataException>(() => toObject.Delete());
 
             DatabaseSession.Instance.Connector.DeleteForeignKeyConstraint(fromObject.GetType().GetProperty("Usergroup_Id"), fromObject, toObject.GetType().GetProperty(toObject.PrimaryKey), toObject);
 

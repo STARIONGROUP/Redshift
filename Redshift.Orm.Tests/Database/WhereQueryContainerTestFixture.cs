@@ -27,10 +27,6 @@ namespace Redshift.Orm.Tests.Database
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using NUnit.Framework;
 
     using Redshift.Orm.Database;
@@ -49,8 +45,15 @@ namespace Redshift.Orm.Tests.Database
                                 {
                                     Comparer = "=",
                                     Property = typeof(Thing).GetProperty("ThingType"),
-                                    Value = new List<object>() { "someVal12", "someval3", 4 }
+                                    Value = new List<object>() { "someVal12", "someval3", 4 , DateTime.UtcNow }
                                 };
+
+            var container2 = new WhereQueryContainer()
+            {
+                Comparer = "=",
+                Property = typeof(Thing).GetProperty("ThingType"),
+                Value = new List<object>() { DateTime.UtcNow }
+            };
 
             Console.WriteLine(container.GetSqlString());
         }
