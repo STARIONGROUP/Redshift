@@ -25,7 +25,6 @@ before_test:
     - psql -c "ALTER DATABASE redshifttest OWNER TO redshifttest;" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON DATABASE redshifttest TO redshifttest;" -U postgres
     - psql -c "\connect redshifttest" -U postgres
-    - psql -c "CREATE SCHEMA public;" -U postgres
     - psql -c "ALTER SCHEMA public OWNER to redshifttest;" -U postgres
     - psql -c "REVOKE ALL ON SCHEMA public FROM PUBLIC;" -U postgres
     - psql -c "REVOKE ALL ON SCHEMA public FROM redshifttest;" -U postgres
