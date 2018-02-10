@@ -594,5 +594,63 @@ namespace Redshift.Orm.Tests.Database
 
             DatabaseSession.Instance.Connector.DeleteTable(fromObject);
         }
+
+        [Test]
+        public void VerifyThatIndexWorks()
+        {
+            var fromObject = new User
+            {
+                Uuid = Guid.NewGuid(),
+                Name = "James"
+            };
+
+            fromObject.Usergroup_Id = 3;
+
+            var testname = "James";
+
+            DatabaseSession.Instance.Connector.CreateTableWithColumnsAndPrimaryKey(fromObject);
+            
+            // save some names
+            fromObject.Save(ignoreNull: true);
+
+            var object2 = new User
+            {
+                Uuid = Guid.NewGuid(),
+                Name = "James2"
+            };
+
+            object2.Save(ignoreNull: true);
+
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateIndex(fromObject, new List<PropertyInfo> { typeof(User).GetProperty("Name") }));
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.DeleteIndex(fromObject, new List<PropertyInfo> { typeof(User).GetProperty("Name") }));
+        }
+
+        [Test]
+        public void VerifyThatFunctionasAndTriggersWork()
+        {
+            var fromObject = new User
+            {
+                Uuid = Guid.NewGuid(),
+                Name = "James"
+            };
+
+            fromObject.Usergroup_Id = 3;
+
+            var testname = "James";
+
+            DatabaseSession.Instance.Connector.CreateTableWithColumnsAndPrimaryKey(fromObject);
+
+            // save some names
+            fromObject.Save(ignoreNull: true);
+
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateReplicateFunctionAndTrigger(fromObject, "thing"));
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.DeleteReplicateFunctionAndTrigger(fromObject));
+
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateFunction("someFunc", "", "varchar"));
+
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.DeleteFunction("someFunc"));
+
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateFunctionAndTrigger("user", "someFunc2", "", true, true, true, true));
+        }
     }
 }
