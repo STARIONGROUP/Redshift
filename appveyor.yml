@@ -24,8 +24,7 @@ before_test:
     - psql -c "CREATE USER redshifttest WITH LOGIN PASSWORD '1234';" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON DATABASE redshifttest TO redshifttest;" -U postgres
     - psql -c "\connect redshifttest" -U postgres
-    - psql -c "GRANT ALL ON SCHEMA public TO redshifttest;" -U postgres
-    - psql -c "ALTER SCHEMA public OWNER TO redshifttest;" -U postgres
+    - psql -c "ALTER SCHEMA public OWNER to redshifttest;" -U postgres
 test:
   assemblies:
     only:
