@@ -20,7 +20,6 @@ build:
   publish_nuget: true
   include_nuget_references: true
 before_test:  
-    - psql -c "DROP DATABASE redshifttest;" -U postgres
     - psql -c "CREATE DATABASE redshifttest WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';" -U postgres
     - psql -c "CREATE ROLE redshifttest WITH LOGIN PASSWORD '1234';" -U postgres
     - psql -c "ALTER DATABASE redshifttest OWNER TO redshifttest;" -U postgres
