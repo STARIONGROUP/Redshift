@@ -52,6 +52,7 @@ NOTE: Redshift.Api is automatically dependent on Redshift.Orm. There is no need 
 # License
 
 The libraries contained in the Redshift Framework are provided to the community under the GNU Lesser General Public License v3. See the LICENSE and COPYING.LESSER files for the license text.
+
 ## Copyright Statement
 Copyright (c) 2018 RHEA System S.A.
 
@@ -60,16 +61,16 @@ Authors: Alex Vorobiev, Naron Phou
 This file is part of Redshift.Orm
 
 Redshift.Orm is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Redshift.Orm is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Lesser General Public License
 along with Redshift.Orm.  If not, see <http://www.gnu.org/licenses/>.
 
 # Contributions
