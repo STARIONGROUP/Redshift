@@ -643,7 +643,7 @@ namespace Redshift.Orm.Tests.Database
             // save some names
             fromObject.Save(ignoreNull: true);
 
-            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateReplicateFunctionAndTrigger(fromObject, "thing"));
+            Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateReplicateFunctionAndTrigger(fromObject, "thing", "uuid"));
             Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.DeleteReplicateFunctionAndTrigger(fromObject));
 
             Assert.DoesNotThrow(() => DatabaseSession.Instance.Connector.CreateFunction("someFunc", "", "varchar"));

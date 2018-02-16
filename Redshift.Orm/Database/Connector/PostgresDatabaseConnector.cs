@@ -2054,8 +2054,9 @@ namespace Redshift.Orm.Database
         /// </summary>
         /// <param name="thing">The <see cref="IEntityObject"/> to apply the function and trigger to.</param>
         /// <param name="replicationTable">The table which to replicate to.</param>
+        /// <param name="idColumnName">The name of the id column to be used for replication. Must be the same between target and replication table.</param>
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
-        public void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, object transaction = null)
+        public void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, string idColumnName, object transaction = null)
         {
             NpgsqlConnection con;
             NpgsqlTransaction tran;
@@ -2064,8 +2065,8 @@ namespace Redshift.Orm.Database
 
             var functionName = $"trigger_on_{thing.TableName}";
             
-            var columnListNew = $"NEW.uuid,'{thing.TableName}',NEW.modifiedon";         
-            var columnListOld = "uuid=OLD.uuid";
+            var columnListNew = $"NEW.{idColumnName},'{thing.TableName}',NEW.modifiedon";         
+            var columnListOld = $"{idColumnName}=OLD.{idColumnName}";
 
             var sql = $"CREATE OR REPLACE FUNCTION {functionName}() RETURNS TRIGGER";
             sql += " AS $function$";

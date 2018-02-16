@@ -500,8 +500,9 @@ namespace Redshift.Orm.Database
         /// </summary>
         /// <param name="thing">The <see cref="IEntityObject"/> to apply the function and trigger to.</param>
         /// <param name="replicationTable">The table which to replicate to.</param>
+        /// <param name="idColumnName">The name of the id column to be used for replication. Must be the same between target and replication table.</param>
         /// <param name="transaction">If command is to be transaction safe you can supply the transaction object here.</param>
-        void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, object transaction = null);
+        void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, string idColumnName, object transaction = null);
 
         /// <summary>
         /// Drops a replication function and trigger on a given table.

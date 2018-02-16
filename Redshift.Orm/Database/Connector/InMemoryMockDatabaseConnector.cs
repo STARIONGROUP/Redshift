@@ -390,7 +390,7 @@ namespace Redshift.Orm.Database
             return;
         }
 
-        public void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, object transaction = null)
+        public void CreateReplicateFunctionAndTrigger(IEntityObject thing, string replicationTable, string idColumnName, object transaction = null)
         {
             return;
         }
