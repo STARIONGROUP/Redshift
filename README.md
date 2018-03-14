@@ -4,6 +4,7 @@ Redshift is a framework encompassing various helper libraries used to implement 
 
   - Redshift.Orm
   - Redshift.Api
+  - Redshift.Email
 
 ## NuGet
 
@@ -11,6 +12,7 @@ Package | Link
 --------|--------
 Redshift.Api | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Api)](https://www.nuget.org/packages/Redshift.Api/)
 Redshift.Orm | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Orm)](https://www.nuget.org/packages/Redshift.Orm/)
+Redshift.Email | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Email)](https://www.nuget.org/packages/Redshift.Email/)
 
 ## Build Status
 
@@ -48,6 +50,16 @@ Install-Package Redshift.Api
 
 NOTE: Redshift.Api is automatically dependent on Redshift.Orm. There is no need to install the **Orm** library if the **Api** library is installed.
 
+## Redshift.Email
+An helper library designed to standardize email dispatch.
+
+### Installation
+
+The librbary is available on nuget.org: https://www.nuget.org/packages/Redshift.Email
+
+```
+Install-Package Redshift.Email
+```
 
 # License
 

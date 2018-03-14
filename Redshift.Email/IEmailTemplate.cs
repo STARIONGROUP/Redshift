@@ -33,12 +33,12 @@ namespace Redshift.Email
         /// <summary>
         /// The subject of the message.
         /// </summary>
-        string Subject { get; set; }
+        string Subject { get; }
 
         /// <summary>
         /// Get or set the dotliquid file of the plaintext.
         /// </summary>
-        string TemplatePlainFile { get; set; }
+        string TemplatePlainFile { get; }
 
         /// <summary>
         /// Gets the plain text email body text.

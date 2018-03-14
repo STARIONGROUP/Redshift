@@ -32,7 +32,7 @@ namespace Redshift.Email
     /// <summary>
     /// The email sender.
     /// </summary>
-    public class EmailSender
+    public class EmailSender : IEmailSender
     {
         /// <summary>
         /// Gets or sets the settings for the email sender.
