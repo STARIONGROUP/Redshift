@@ -12,7 +12,7 @@ Package | Link
 --------|--------
 Redshift.Api | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Api)](https://www.nuget.org/packages/Redshift.Api/)
 Redshift.Orm | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Orm)](https://www.nuget.org/packages/Redshift.Orm/)
-Redshift.Orm | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Email)](https://www.nuget.org/packages/Redshift.Email/)
+Redshift.Email | [![NuGet Badge](https://buildstats.info/nuget/Redshift.Email)](https://www.nuget.org/packages/Redshift.Email/)
 
 ## Build Status
 
