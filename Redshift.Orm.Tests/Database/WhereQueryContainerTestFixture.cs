@@ -27,6 +27,7 @@ namespace Redshift.Orm.Tests.Database
 {
     using System;
     using System.Collections.Generic;
+    using HelperModel;
     using NUnit.Framework;
 
     using Redshift.Orm.Database;
@@ -36,7 +37,7 @@ namespace Redshift.Orm.Tests.Database
     /// WhereQueryContainerTestFixture
     /// </summary>
     [TestFixture]
-    public class WhereQueryContainerTestFixture
+    public class WhereQueryContainerTestFixture : OrmBaseTestFixture
     {
         [Test]
         public void VerifyThatContainerConstructsString()
@@ -56,6 +57,56 @@ namespace Redshift.Orm.Tests.Database
             };
 
             Console.WriteLine(container.GetSqlString());
+        }
+
+        [Test]
+        public void VerifyThatQueriesAreCorrect()
+        {
+            var template = new DatedThing();
+
+            DatabaseSession.Instance.Connector.CreateTableWithColumns(template);
+
+            var object1 = new DatedThing()
+            {
+                Uuid = Guid.NewGuid(),
+                Date = new DateTime(2018, 2, 3)
+            };
+
+            object1.Save();
+
+            var object2 = new DatedThing()
+            {
+                Uuid = Guid.NewGuid(),
+                Date = new DateTime(2018, 2, 4)
+            };
+
+            object2.Save();
+
+            var object3 = new DatedThing()
+            {
+                Uuid = Guid.NewGuid(),
+                Date = new DateTime(2018, 2, 5)
+            };
+
+            object3.Save();
+
+            var returned = DatedThing.Where(new List<IWhereQueryContainer>()
+            {
+                new WhereQueryContainer
+                {
+                    Comparer = ">=",
+                    Property = typeof(DatedThing).GetProperty("Date"),
+                    Value = { new DateTime(2018, 2, 3) }
+                },
+                new WhereQueryContainer
+                {
+                    Comparer = "<",
+                    Property = typeof(DatedThing).GetProperty("Date"),
+                    Value = { new DateTime(2018, 2, 5) }
+                }
+            });
+
+            Assert.AreEqual(2, returned.Count);
         }
     }
 }
