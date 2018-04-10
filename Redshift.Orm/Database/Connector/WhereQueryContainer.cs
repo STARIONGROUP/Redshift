@@ -82,7 +82,7 @@ namespace Redshift.Orm.Database
 
             for (int i = 0; i < this.Value.Count; i++)
             {
-                queryList.Add($"{columnName.MakePostgreSqlSafe()} {this.Comparer} @{columnName}{i}");
+                queryList.Add($"{columnName.MakePostgreSqlSafe()} {this.Comparer} @{columnName}{this.GetHashCode()}{i}");
             }
 
             return $"({string.Join(this.IsUsingAndConditionBetweenValues? " AND " : " OR ", queryList)})";
@@ -100,11 +100,11 @@ namespace Redshift.Orm.Database
 
                 if (val is DateTime time)
                 {
-                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{i}", NpgsqlDbType.Timestamp, time.ToUniversalTime());
+                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{this.GetHashCode()}{i}", NpgsqlDbType.Timestamp, time.ToUniversalTime());
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{i}", val.GetType().GetTypeInfo().IsEnum ? val.ToString() : val);
+                    cmd.Parameters.AddWithValue($"{EntityHelper.GetColumnNameFromProperty(this.Property)}{this.GetHashCode()}{i}", val.GetType().GetTypeInfo().IsEnum ? val.ToString() : val);
                 }
             }
         }
