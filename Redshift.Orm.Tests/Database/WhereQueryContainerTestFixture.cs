@@ -60,6 +60,52 @@ namespace Redshift.Orm.Tests.Database
         }
 
         [Test]
+        public void VerifyThatQueryContainersCanBeJoinedByORAND()
+        {
+            var template = new User();
+
+            DatabaseSession.Instance.Connector.CreateTableWithColumns(template);
+
+            var user1 = new User()
+            {
+                Uuid = Guid.NewGuid(),
+                Usergroup_Id = 4,
+                Name = "Name1"
+            };
+
+            user1.Save();
+
+            var user2 = new User()
+            {
+                Uuid = Guid.NewGuid(),
+                Usergroup_Id = 5,
+                Name = "Name2"
+            };
+
+            user2.Save();
+
+            var whereQuery1 = new WhereQueryContainer()
+            {
+                Comparer = "=",
+                Property = typeof(User).GetProperty("Name"),
+                Value = new List<object>() { "Name1" }
+            };
+
+            var whereQuery2 = new WhereQueryContainer()
+            {
+                Comparer = "=",
+                Property = typeof(User).GetProperty("Usergroup_Id"),
+                Value = new List<object>() { 5 }
+            };
+
+            Assert.AreEqual(0, User.Where(new List<IWhereQueryContainer>() { whereQuery1, whereQuery2}, true).Count);
+            Assert.AreEqual(2, User.Where(new List<IWhereQueryContainer>() { whereQuery1, whereQuery2 }, false).Count);
+
+            Assert.AreEqual(0, User.CountWhere(new List<IWhereQueryContainer>() { whereQuery1, whereQuery2 }, true));
+            Assert.AreEqual(2, User.CountWhere(new List<IWhereQueryContainer>() { whereQuery1, whereQuery2 }, false));
+        }
+
+        [Test]
         public void VerifyThatQueriesAreCorrect()
         {
             var template = new DatedThing();

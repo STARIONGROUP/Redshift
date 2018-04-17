@@ -423,7 +423,7 @@ namespace Redshift.Orm.Database
             return;
         }
 
-        public List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject
+        public List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject
         {
             return this.Cache.Values.OfType<T>().ToList();
         }
@@ -433,7 +433,7 @@ namespace Redshift.Orm.Database
             return this.Cache.Values.OfType<T>().Count();
         }
 
-        public long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries) where T : IEntityObject
+        public long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true) where T : IEntityObject
         {
             return this.Cache.Values.OfType<T>().Count();
         }

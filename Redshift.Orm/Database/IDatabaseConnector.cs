@@ -422,6 +422,7 @@ namespace Redshift.Orm.Database
         /// <param name="queries">
         /// The queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <param name="limit">The limit of number of records to be returned.</param>
         /// <param name="offset">The offset from which to start the records.</param>
         /// <param name="orderBy">The property by which to sort.</param>
@@ -429,7 +430,7 @@ namespace Redshift.Orm.Database
         /// <returns>
         /// A list of <see cref="IEntityObject"/> objects that were returned from the database.
         /// </returns>
-        List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject;
+        List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject;
 
         /// <summary>
         /// Reads a record where the primary key matches the supplied id
@@ -456,10 +457,11 @@ namespace Redshift.Orm.Database
         /// <param name="queries">
         /// The queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <returns>
         /// The count of the requested query.
         /// </returns>
-        long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries) where T : IEntityObject;
+        long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true) where T : IEntityObject;
 
         /// <summary>
         /// Returns a very close estimate of the number of records of a table based on table name.

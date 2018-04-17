@@ -1138,6 +1138,7 @@ namespace Redshift.Orm.Database
         /// <param name="queries">
         /// The queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <param name="limit">The limit of number of records to be returned.</param>
         /// <param name="offset">The offset from which to start the records.</param>
         /// <param name="orderBy">The property by which to sort.</param>
@@ -1145,7 +1146,7 @@ namespace Redshift.Orm.Database
         /// <returns>
         /// The <see cref="NpgsqlCommand"/>.
         /// </returns>
-        public NpgsqlCommand DecomposeWhereStatements(ref NpgsqlConnection con, ref string sql, List<IWhereQueryContainer> queries, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false)
+        public NpgsqlCommand DecomposeWhereStatements(ref NpgsqlConnection con, ref string sql, List<IWhereQueryContainer> queries, bool whereQueriesByAnd = true, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false)
         {
             if (queries.Any())
             {
@@ -1158,7 +1159,7 @@ namespace Redshift.Orm.Database
                     queryList.Add(query.GetSqlString());
                 }
 
-                sql += string.Join(" AND ", queryList);
+                sql += string.Join(whereQueriesByAnd ? " AND " : " OR ", queryList);
             }
 
             if (orderBy != null)
@@ -1206,6 +1207,7 @@ namespace Redshift.Orm.Database
         /// <param name="queries">
         /// The queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <param name="limit">The limit of number of records to be returned.</param>
         /// <param name="offset">The offset from which to start the records.</param>
         /// <param name="orderBy">The property by which to sort.</param>
@@ -1213,7 +1215,7 @@ namespace Redshift.Orm.Database
         /// <returns>
         /// A list of <see cref="IEntityObject"/> objects that were returned from the database.
         /// </returns>
-        public List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject
+        public List<T> ReadRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false) where T : IEntityObject
         {
             var result = new List<T>();
 
@@ -1222,7 +1224,7 @@ namespace Redshift.Orm.Database
             var con = this.CreateConnection(DatabaseSession.Instance.Credentials) as NpgsqlConnection;
             var sql = $"SELECT * FROM {clone.TableName.MakePostgreSqlSafe()}";
 
-            var cmd = this.DecomposeWhereStatements(ref con, ref sql, queries.ToList(), limit, offset, orderBy, orderDescending);
+            var cmd = this.DecomposeWhereStatements(ref con, ref sql, queries.ToList(), whereQueriesByAnd, limit, offset, orderBy, orderDescending);
 
             try
             {
@@ -1291,10 +1293,11 @@ namespace Redshift.Orm.Database
         /// <param name="queries">
         /// The queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <returns>
         /// The count of rows in the query. -1 if something went wrong.
         /// </returns>
-        public long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries) where T : IEntityObject
+        public long CountRecordsWhere<T>(IEnumerable<IWhereQueryContainer> queries, bool whereQueriesByAnd = true) where T : IEntityObject
         {
             var result = -1L;
 
@@ -1303,7 +1306,7 @@ namespace Redshift.Orm.Database
             var con = this.CreateConnection(DatabaseSession.Instance.Credentials) as NpgsqlConnection;
             var sql = $"SELECT count(*) FROM {clone.TableName.MakePostgreSqlSafe()}";
 
-            var cmd = this.DecomposeWhereStatements(ref con, ref sql, queries.ToList());
+            var cmd = this.DecomposeWhereStatements(ref con, ref sql, queries.ToList(), whereQueriesByAnd);
 
             try
             {

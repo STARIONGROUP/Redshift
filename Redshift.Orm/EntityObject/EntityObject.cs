@@ -84,12 +84,13 @@ namespace Redshift.Orm.EntityObject
         /// <param name="whereQueries">
         /// The where Queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <returns>
         /// Number of rows.
         /// </returns>
-        public static long CountWhere(List<IWhereQueryContainer> whereQueries)
+        public static long CountWhere(List<IWhereQueryContainer> whereQueries, bool whereQueriesByAnd = true)
         {
-            return DatabaseSession.Instance.Connector.CountRecordsWhere<TObject>(whereQueries);
+            return DatabaseSession.Instance.Connector.CountRecordsWhere<TObject>(whereQueries, whereQueriesByAnd);
         }
 
         /// <summary>
@@ -157,6 +158,7 @@ namespace Redshift.Orm.EntityObject
         /// <param name="whereQueries">
         /// The where Queries.
         /// </param>
+        /// <param name="whereQueriesByAnd">A value indicating whether the where queries are joined by AND.</param>
         /// <param name="limit">The limit of records to return.</param>
         /// <param name="offset">The offset of records to provide from.</param>
         /// <param name="orderBy">The property to order the records by.</param>
@@ -164,9 +166,9 @@ namespace Redshift.Orm.EntityObject
         /// <returns>
         /// The <see cref="List{T}"/> of returned records.
         /// </returns>
-        public static List<TObject> Where(List<IWhereQueryContainer> whereQueries, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false)
+        public static List<TObject> Where(List<IWhereQueryContainer> whereQueries, bool whereQueriesByAnd = true, int? limit = null, int? offset = null, PropertyInfo orderBy = null, bool orderDescending = false)
         {
-            return DatabaseSession.Instance.Connector.ReadRecordsWhere<TObject>(whereQueries, limit, offset, orderBy, orderDescending);
+            return DatabaseSession.Instance.Connector.ReadRecordsWhere<TObject>(whereQueries, whereQueriesByAnd, limit, offset, orderBy, orderDescending);
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Redshift.Seed.Modules
                     {
                         if (queryParams.IsFiltered && !queryParams.IsPaginated)
                         {
-                            resp = User.Where(queryParams.FilterList, null, null, queryParams.OrderProperty,
+                            resp = User.Where(queryParams.FilterList, true, null, null, queryParams.OrderProperty,
                                 queryParams.IsDescending);
 
                             if (queryParams.IsCountExpected)
@@ -102,7 +102,7 @@ namespace Redshift.Seed.Modules
                             // when paginating, always return count
                             queryParams.IsCountExpected = true;
 
-                            resp = User.Where(queryParams.FilterList, queryParams.Limit, queryParams.Offset,
+                            resp = User.Where(queryParams.FilterList, true, queryParams.Limit, queryParams.Offset,
                                 queryParams.OrderProperty, queryParams.IsDescending);
 
                             // paginated response provide count always and the count is of total filtered records
@@ -110,7 +110,7 @@ namespace Redshift.Seed.Modules
                         }
                         else
                         {
-                            resp = User.Where(queryParams.FilterList, null, null, null, true);
+                            resp = User.Where(queryParams.FilterList, true, null, null, null, true);
 
                             if (queryParams.IsCountExpected)
                             {
