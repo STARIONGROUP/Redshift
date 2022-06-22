@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="4.5.2" />
     <PackageReference Include="Npgsql" Version="3.2.7" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
